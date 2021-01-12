@@ -1,4 +1,4 @@
-from svg import Parser, SVG
+from svg import SVG, Parser
 
 
 def test_parse_file():

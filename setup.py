@@ -1,8 +1,7 @@
-from setuptools import setup, Extension
-from Cython.Build import cythonize
-import os
 from os import path
-import sys
+
+from Cython.Build import cythonize
+from setuptools import Extension, setup
 
 this_directory = path.abspath(path.dirname(__file__))
 with open(path.join(this_directory, 'README.md')) as f:

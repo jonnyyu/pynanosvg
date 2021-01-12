@@ -1,5 +1,5 @@
-from svg import Parser, Rasterizer
 from PIL import Image
+from svg import Parser, Rasterizer
 
 
 def test_rast_to_bytes():

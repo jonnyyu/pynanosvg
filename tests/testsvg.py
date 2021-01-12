@@ -1,4 +1,5 @@
-from svg import SVG, Parser
+from svg import Parser
+
 
 def test_svg_size():
     svg = Parser.parse_file('tests/Londonhackspacelogo.svg')
