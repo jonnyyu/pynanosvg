@@ -9,6 +9,7 @@ __pycache__/
 *.so
 
 #ignore cython generated files
+svg/*.c
 pynanosvg/*.c
 
 .pytest_cache/
