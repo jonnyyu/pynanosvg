@@ -132,4 +132,8 @@ cdef extern from 'nanosvgrast.h':
                    NSVGimage* image, float tx, float ty, float scale,
                    unsigned char* dst, int w, int h, int stride)
 
+    cdef void nsvgRasterizeEx(NSVGrasterizer* r,
+                   NSVGimage* image, float tx, float ty, float scale,
+                   unsigned char* dst, int w, int h, int stride, int subSamples, char antialias)
+
     cdef void nsvgDeleteRasterizer(NSVGrasterizer*)

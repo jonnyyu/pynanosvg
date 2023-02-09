@@ -20,7 +20,8 @@ cdef class Rasterizer:
                   height: cython.int,
                   scale: cython.float = 1.0,
                   tx: cython.int = 0,
-                  ty: cython.int = 0) -> bytes:
+                  ty: cython.int = 0,
+                  antialias: bool = True) -> bytes:
         """
         Rasterizes the SVG into a new buffer of bytes forming an RGBA image.
         """
@@ -30,9 +31,14 @@ cdef class Rasterizer:
         length = width * height * 4
         stride = width * 4
         buff = bytes(length)
-        nsvgRasterize(self._nsvgrasterizer,
-                      svg._nsvgimage, tx, ty, scale,
-                      buff, width, height, stride)
+        if antialias:
+            nsvgRasterize(self._nsvgrasterizer,
+                        svg._nsvgimage, tx, ty, scale,
+                        buff, width, height, stride)
+        else:
+            nsvgRasterizeEx(self._nsvgrasterizer,
+                        svg._nsvgimage, tx, ty, scale,
+                        buff, width, height, stride, 1, 0)
         return buff
 
     def rasterize_to_buffer(self, svg: SVG,
@@ -43,6 +49,7 @@ cdef class Rasterizer:
                             scale: cython.float = 1.0,
                             tx: cython.int = 0,
                             ty: cython.int = 0,
+                            antialias: bool = True
                             ):
         """
         Rasterizes the SVG into a given buffer, which should be of length width * height * 4. Stride is usually width * 4.
@@ -53,7 +60,12 @@ cdef class Rasterizer:
             raise ValueError('You must set a stride to rasterize to a buffer, stride must be positive.')
         if svg._nsvgimage == NULL:
             raise ValueError('The given SVG is empty, you must parse the SVG first.')
-        nsvgRasterize(self._nsvgrasterizer,
-                      svg._nsvgimage, tx, ty, scale,
-                      buffer, width, height, stride)
+        if antialias:
+            nsvgRasterize(self._nsvgrasterizer,
+                        svg._nsvgimage, tx, ty, scale,
+                        buffer, width, height, stride)
+        else:
+            nsvgRasterizeEx(self._nsvgrasterizer,
+                        svg._nsvgimage, tx, ty, scale,
+                        buffer, width, height, stride, 1, 0)
         return buffer
